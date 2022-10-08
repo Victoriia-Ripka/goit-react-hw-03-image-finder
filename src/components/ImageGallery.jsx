@@ -1,14 +1,73 @@
-// const ImageGallery = ({ images }) => {
-//   <ul>
-//     {images.map(image => (
-//       <li key={image.id}>
-//         <p>{image.id}</p>
-//         <img
-//           src={image.previewURL}
-//           alt={image.tags}
-//           widtt={image.previewWidth}
-//         />
-//       </li>
-//     ))}
-//   </ul>;
-// };
+import { Component } from 'react';
+import { ImageGalleryItem } from './ImageGalleryItem';
+import { Button } from './Button';
+import { Gallery, Image } from './styles.styled';
+import { toast } from 'react-toastify';
+import { fetchImages } from 'api';
+import { PropTypes } from 'prop-types';
+
+export default class ImageGallery extends Component {
+  state = {
+    page: 1,
+    images: [],
+    error: null,
+    status: 'idle',
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.input !== this.props.input ||
+      prevState.page !== this.state.page
+    ) {
+      this.setState({ status: 'pending' });
+      fetchImages(this.props.input, this.state.page).then(response => {
+        if (response.hits.length === 0) {
+          toast.failure('Wrong request');
+          this.setState({ status: 'error' });
+        } else {
+          this.setState({ images: [...response.hits], status: 'resolved' });
+        }
+      });
+    }
+  }
+
+  loadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
+
+  render() {
+    const { images, error, status } = this.state;
+    if (status === 'idle') {
+      return <></>;
+    }
+
+    if (status === 'pending') {
+      return <p>Loading</p>;
+    }
+
+    if (status === 'rejected') {
+      return <p>{error.message}</p>;
+    }
+
+    if (status === 'resolved') {
+      return (
+        <>
+          <Gallery>
+            {images.map(image => (
+              <Image key={image.id}>
+                <ImageGalleryItem image={image} />
+              </Image>
+            ))}
+          </Gallery>
+          <div style={{ display: 'grid' }}>
+            {images.length > 0 && <Button loadMore={this.loadMore} />}
+          </div>
+        </>
+      );
+    }
+  }
+}
+
+ImageGallery.propTypes = {
+  input: PropTypes.string.isRequired,
+};
