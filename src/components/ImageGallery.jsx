@@ -5,12 +5,15 @@ import { Gallery, Image } from './styles.styled';
 import { toast } from 'react-toastify';
 import { fetchImages } from 'api';
 import { PropTypes } from 'prop-types';
+import { Loader } from './Loader';
+import * as basicLightbox from 'basiclightbox';
+
+// const basicLightbox = require('basiclightbox');
 
 export default class ImageGallery extends Component {
   state = {
     page: 1,
     images: [],
-    error: null,
     status: 'idle',
   };
 
@@ -47,7 +50,7 @@ export default class ImageGallery extends Component {
     }
 
     if (status === 'pending') {
-      return <p>Loading</p>;
+      return <Loader />;
     }
 
     if (status === 'rejected') {

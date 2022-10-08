@@ -25,10 +25,12 @@ export const Gallery = styled.ul`
   gap: 10px;
   padding: 0;
   margin: 10px;
+  /* overflow-anchor: none; */
 `;
 
 export const Image = styled.li`
   flex-basis: calc((100%-20px) / 5);
+  /* overflow-anchor: auto; */
 `;
 
 export const Img = styled.img`
@@ -55,3 +57,11 @@ export const SomeComp = styled.div`
   background-color: #151515;
   width: 100%;
 `;
+
+// export const LoaderBkgrnd = styled.div`
+//   /* width: {screen.width}; */
+//   height: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;

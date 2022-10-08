@@ -28,6 +28,6 @@ export class ImageGalleryItem extends Component {
 }
 
 ImageGalleryItem.propTypes = {
-  image: PropTypes.object.isRequired, //????
+  image: PropTypes.object.isRequired, 
 };
 

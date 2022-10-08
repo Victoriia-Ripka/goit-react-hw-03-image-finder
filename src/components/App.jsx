@@ -9,15 +9,14 @@ import 'react-toastify/dist/ReactToastify.css';
 export class App extends Component {
   state = {
     input: '',
-    // isLoader: false,
   };
 
-  componentDidMount() {
-    const input = localStorage.getItem('input')
-    if (input) {
-      this.setState({ input: input });
-    }
-  }
+  // componentDidMount() {
+  //   const input = localStorage.getItem('input')
+  //   if (input) {
+  //     this.setState({ input: input });
+  //   }
+  // }
 
   handleSubmit = e => {
     this.setState({ input: e });
