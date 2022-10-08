@@ -17,8 +17,8 @@ export default class ImageGallery extends Component {
     status: 'idle',
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.input !== this.props.input && prevProps.input !== '') {
+  componentDidUpdate(prevProps, _) {
+    if (prevProps.input !== this.props.input) {
       this.setState({ status: 'pending' });
       fetchImages(this.props.input, this.state.page).then(response => {
         if (response.length > 0) {

@@ -58,10 +58,10 @@ export const SomeComp = styled.div`
   width: 100%;
 `;
 
-// export const LoaderBkgrnd = styled.div`
-//   /* width: {screen.width}; */
-//   height: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
+export const LoaderBkgrnd = styled.div`
+  /* width: {screen.width}; */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
