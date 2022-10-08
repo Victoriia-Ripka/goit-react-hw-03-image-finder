@@ -15,17 +15,14 @@ export default class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.input !== this.props.input ||
-      prevState.page !== this.state.page
-    ) {
+    if (prevProps.input !== this.props.input && prevProps.input !== '') {
       this.setState({ status: 'pending' });
       fetchImages(this.props.input, this.state.page).then(response => {
-        if (response.hits.length === 0) {
+        if (response.length > 0) {
+          this.setState({ images: [...response], status: 'resolved' });
+        } else {
           toast.failure('Wrong request');
           this.setState({ status: 'error' });
-        } else {
-          this.setState({ images: [...response.hits], status: 'resolved' });
         }
       });
     }
@@ -33,6 +30,14 @@ export default class ImageGallery extends Component {
 
   loadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
+    this.setState({ status: 'pending' });
+    fetchImages(this.props.input, this.state.page + 1).then(response => {
+      this.setState({
+        images: [...this.state.images, ...response],
+        status: 'resolved',
+      });
+      console.log(this.state.images);
+    });
   };
 
   render() {
