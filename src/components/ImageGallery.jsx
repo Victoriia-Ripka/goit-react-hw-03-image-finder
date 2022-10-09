@@ -49,7 +49,7 @@ export default class ImageGallery extends Component {
   };
 
   render() {
-    const { images, loading, isModalOpen, image } = this.state;
+    const { images, loading, isModalOpen, imageURL } = this.state;
 
     return (
       <>
@@ -61,7 +61,7 @@ export default class ImageGallery extends Component {
             </Image>
           ))}
         </Gallery>
-        {isModalOpen && <Modal image={image} onClose={this.closeModal} />}
+        {isModalOpen && <Modal imageURL={imageURL} onClose={this.closeModal} />}
         <div style={{ display: 'grid' }}>
           {images.length > 0 && <Button loadMore={this.loadMore} />}
         </div>

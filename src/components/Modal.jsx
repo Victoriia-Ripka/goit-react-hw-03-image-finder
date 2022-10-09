@@ -20,6 +20,6 @@ render() {
 };
 
 Modal.propTypes = {
-  image: PropTypes.string,
+  imageURL: PropTypes.string,
   onClose: PropTypes.func,
 };
