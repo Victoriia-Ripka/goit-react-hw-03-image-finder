@@ -24,8 +24,8 @@ export default class ImageGallery extends Component {
         if (response.length > 0) {
           this.setState({ images: [...response], loading: false });
         } else {
-          toast.failure('Wrong request');
           this.setState({ loading: false });
+          toast.error('Wrong request');
         }
       });
     }
