@@ -1,78 +1,72 @@
 import { Component } from 'react';
 import { ImageGalleryItem } from './ImageGalleryItem';
 import { Button } from './Button';
+import { Modal } from './Modal';
 import { Gallery, Image } from './styles.styled';
 import { toast } from 'react-toastify';
 import { fetchImages } from 'api';
 import { PropTypes } from 'prop-types';
 import { Loader } from './Loader';
-import * as basicLightbox from 'basiclightbox';
-
-// const basicLightbox = require('basiclightbox');
 
 export default class ImageGallery extends Component {
   state = {
     page: 1,
     images: [],
-    status: 'idle',
+    loading: false,
+    imageURL: null,
+    isModalOpen: false,
   };
 
   componentDidUpdate(prevProps, _) {
     if (prevProps.input !== this.props.input) {
-      this.setState({ status: 'pending' });
+      this.setState({ loading: true });
       fetchImages(this.props.input, this.state.page).then(response => {
         if (response.length > 0) {
-          this.setState({ images: [...response], status: 'resolved' });
+          this.setState({ images: [...response], loading: false });
         } else {
           toast.failure('Wrong request');
-          this.setState({ status: 'error' });
+          this.setState({ loading: false });
         }
       });
     }
   }
 
+  openModal = imageURL => {
+    this.setState({ isModalOpen: true, imageURL: imageURL });
+  };
+  closeModal = () => this.setState({ isModalOpen: false, modalUrl: null });
+
   loadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    this.setState({ status: 'pending' });
+    this.setState({ loading: true });
     fetchImages(this.props.input, this.state.page + 1).then(response => {
       this.setState({
         images: [...this.state.images, ...response],
-        status: 'resolved',
+        loading: false,
       });
       console.log(this.state.images);
     });
   };
 
   render() {
-    const { images, error, status } = this.state;
-    if (status === 'idle') {
-      return <></>;
-    }
+    const { images, loading, isModalOpen, image } = this.state;
 
-    if (status === 'pending') {
-      return <Loader />;
-    }
-
-    if (status === 'rejected') {
-      return <p>{error.message}</p>;
-    }
-
-    if (status === 'resolved') {
-      return (
-        <>
-          <Gallery>
-            {images.map(image => (
-              <Image key={image.id}>
-                <ImageGalleryItem image={image} />
-              </Image>
-            ))}
-          </Gallery>
-          <div style={{ display: 'grid' }}>
-            {images.length > 0 && <Button loadMore={this.loadMore} />}
-          </div>
-        </>
-      );
-    }
+    return (
+      <>
+        {loading && <Loader />}
+        <Gallery>
+          {images.map(image => (
+            <Image key={image.id}>
+              <ImageGalleryItem image={image} onClick={this.openModal} />
+            </Image>
+          ))}
+        </Gallery>
+        {isModalOpen && <Modal image={image} onClose={this.closeModal} />}
+        <div style={{ display: 'grid' }}>
+          {images.length > 0 && <Button loadMore={this.loadMore} />}
+        </div>
+      </>
+    );
   }
 }
 

@@ -1,13 +1,25 @@
-import { SomeComp } from './styles.styled';
+import { Backdrop, ImgModal } from './styles.styled';
 import { PropTypes } from 'prop-types';
+import { Component } from 'react';
 
-export const Modal = ({ image, onClose }) => {
-  <SomeComp>
-    <img src={image.largeImageURL} alt={image.tags} />
-  </SomeComp>;
+export class Modal extends Component  {
+
+closeModal = e => {
+this.props.onClose()
+}
+
+render() {
+  console.log('hello')
+  return (
+    <Backdrop onClick={this.closeModal}>
+      <ImgModal src={this.props.imageURL} alt='hello' />
+    </Backdrop>
+  );
+}
+
 };
 
 Modal.propTypes = {
-    image: PropTypes.object.isRequired, 
-    onClose: PropTypes.func,
-  }
+  image: PropTypes.string,
+  onClose: PropTypes.func,
+};
