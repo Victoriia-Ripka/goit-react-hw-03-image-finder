@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { ImageGalleryItem } from './ImageGalleryItem';
 import { Button } from './Button';
 import { Modal } from './Modal';
-import { Gallery, Image } from './styles.styled';
+import { Gallery, Image, ButtonWrapper } from './styles.styled';
 import { toast } from 'react-toastify';
 import { fetchImages } from 'api';
 import { PropTypes } from 'prop-types';
@@ -62,7 +62,10 @@ export default class ImageGallery extends Component {
           ))}
         </Gallery>
         {isModalOpen && <Modal imageURL={imageURL} onClose={this.closeModal} />}
-        {images.length > 0 && <Button loadMore={this.loadMore} />}
+        <ButtonWrapper>
+          {images.length > 0 && <Button loadMore={this.loadMore} />}
+        </ButtonWrapper>
+        
       </>
     );
   }

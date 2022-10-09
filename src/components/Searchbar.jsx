@@ -1,6 +1,12 @@
 import { Component } from 'react';
 import { toast } from 'react-toastify';
-import { Header, Input } from './styles.styled';
+import {
+  Header,
+  Input,
+  Form,
+  SearchFormBtn,
+  SearchFormBtnLabel,
+} from './styles.styled';
 import { PropTypes } from 'prop-types';
 
 export default class Searchbar extends Component {
@@ -25,10 +31,10 @@ export default class Searchbar extends Component {
   render() {
     return (
       <Header>
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">
-            <span>Search</span>
-          </button>
+        <Form onSubmit={this.handleSubmit}>
+          <SearchFormBtn type="submit">
+            <SearchFormBtnLabel>Search</SearchFormBtnLabel>
+          </SearchFormBtn>
           <Input
             type="text"
             // autoComplete="off"
@@ -37,7 +43,7 @@ export default class Searchbar extends Component {
             onChange={this.handleInput}
             placeholder="Search images and photos"
           />
-        </form>
+        </Form>
       </Header>
     );
   }
