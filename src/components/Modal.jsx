@@ -2,22 +2,34 @@ import { Backdrop, ImgModal } from './styles.styled';
 import { PropTypes } from 'prop-types';
 import { Component } from 'react';
 
-export class Modal extends Component  {
+export class Modal extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleClick)
+  }
 
-closeModal = e => {
-this.props.onClose()
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleClick);
+  }
+
+  handleClick = e => {
+    console.log(e.code)
+    if(e.code=== 'Escape') {
+      this.props.onClose()
+    }
+  }
+  
+  closeModal = e => {
+    this.props.onClose();
+  };
+
+  render() {
+    return (
+      <Backdrop onClick={this.closeModal}>
+        <ImgModal src={this.props.imageURL} alt="hello" />
+      </Backdrop>
+    );
+  }
 }
-
-render() {
-  console.log('hello')
-  return (
-    <Backdrop onClick={this.closeModal}>
-      <ImgModal src={this.props.imageURL} alt='hello' />
-    </Backdrop>
-  );
-}
-
-};
 
 Modal.propTypes = {
   imageURL: PropTypes.string,
