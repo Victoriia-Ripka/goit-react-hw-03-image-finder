@@ -62,9 +62,9 @@ export default class ImageGallery extends Component {
           ))}
         </Gallery>
         {isModalOpen && <Modal imageURL={imageURL} onClose={this.closeModal} />}
-        <div style={{ display: 'grid' }}>
+        {/* <div style={{ display: 'grid' }}> */}
           {images.length > 0 && <Button loadMore={this.loadMore} />}
-        </div>
+        {/* </div> */}
       </>
     );
   }
