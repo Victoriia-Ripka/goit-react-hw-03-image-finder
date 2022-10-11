@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import { toast } from 'react-toastify';
+import { ReactComponent as SearchIcon} from '../images/svg/icons8-search.svg' 
+// http 16:50
 import {
   Header,
   Input,
   Form,
   SearchFormBtn,
-  SearchFormBtnLabel,
+  // SearchFormBtnLabel,
 } from './styles.styled';
 import { PropTypes } from 'prop-types';
 
@@ -33,7 +35,8 @@ export default class Searchbar extends Component {
       <Header>
         <Form onSubmit={this.handleSubmit}>
           <SearchFormBtn type="submit">
-            <SearchFormBtnLabel>Search</SearchFormBtnLabel>
+            <SearchIcon/>
+            {/* <SearchFormBtnLabel>Search</SearchFormBtnLabel> */}
           </SearchFormBtn>
           <Input
             type="text"

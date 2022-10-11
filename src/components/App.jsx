@@ -4,7 +4,6 @@ import ImageGallery from './ImageGallery';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AppSection } from './styles.styled';
-// import { ReactComponent as MyIcon} from './' http 16:50
 
 export class App extends Component {
   state = {
@@ -27,7 +26,6 @@ export class App extends Component {
     return (
       <AppSection>
         <Searchbar onSubmit={this.handleSubmit} />
-        {/* {this.state.isLoader && <p>Loading...</p>} */}
         <ImageGallery input={this.state.input} />
         <ToastContainer autoClose={3000} />
       </AppSection>
