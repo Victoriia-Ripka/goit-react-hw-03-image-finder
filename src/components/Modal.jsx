@@ -19,7 +19,7 @@ export class Modal extends Component {
   }
   
   closeModal = e => {
-    this.props.onClose();
+    if(e.target.nodeName === 'DIV') this.props.onClose();
   };
 
   render() {
@@ -32,6 +32,6 @@ export class Modal extends Component {
 }
 
 Modal.propTypes = {
-  imageURL: PropTypes.string,
-  onClose: PropTypes.func,
+  imageURL: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

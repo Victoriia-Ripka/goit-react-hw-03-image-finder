@@ -17,9 +17,9 @@ export default class ImageGallery extends Component {
     isModalOpen: false,
   };
 
-  componentDidUpdate(prevProps, _) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.input !== this.props.input) {
-      this.setState({ loading: true });
+      this.setState({ page: 1, images: [], loading: true });
       fetchImages(this.props.input, this.state.page).then(response => {
         if (response.length > 0) {
           this.setState({ images: [...response], loading: false });
@@ -27,6 +27,15 @@ export default class ImageGallery extends Component {
           this.setState({ loading: false });
           toast.error('Wrong request');
         }
+      });
+    }
+    if (prevState.page !== this.state.page) {
+      this.setState({ loading: true });
+      fetchImages(this.props.input, this.state.page + 1).then(response => {
+        this.setState({
+          images: [...this.state.images, ...response],
+          loading: false,
+        });
       });
     }
   }
@@ -38,14 +47,6 @@ export default class ImageGallery extends Component {
 
   loadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    this.setState({ loading: true });
-    fetchImages(this.props.input, this.state.page + 1).then(response => {
-      this.setState({
-        images: [...this.state.images, ...response],
-        loading: false,
-      });
-      console.log(this.state.images);
-    });
   };
 
   render() {
@@ -65,7 +66,6 @@ export default class ImageGallery extends Component {
         <ButtonWrapper>
           {images.length > 0 && <Button loadMore={this.loadMore} />}
         </ButtonWrapper>
-        
       </>
     );
   }
