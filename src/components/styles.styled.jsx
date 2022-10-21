@@ -144,7 +144,11 @@ export const Btn = styled.button`
 `;
 
 export const LoaderBkgrnd = styled.div`
-  /* width: {screen.width}; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   height: 100%;
   display: flex;
   align-items: center;
